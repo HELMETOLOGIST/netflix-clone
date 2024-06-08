@@ -2,41 +2,35 @@ import React, { useState, useEffect } from "react";
 import requests from "../Request";
 import axios from "axios";
 import { key } from "../Request";
+import Modal from "./Modal";
 
 const Main = () => {
   const [movies, setMovies] = useState([]);
   const movie = movies[Math.floor(Math.random() * movies.length)];
-  console.log(key);
   useEffect(() => {
-    console.log("hi");
-    axios
-      .get(
-        requests.requestPopular)
-      .then((response) => {
-        setMovies(response.data.results);
-        console.log(response);
-      });
+    axios.get(requests.requestPopular).then((response) => {
+      setMovies(response.data.results);
+    });
   }, []);
-  // console.log(movies);
   const truncateString = (str, num) => {
-    if(str?.length > num) {
-        return str.slice(0, num) + '...';
-    }else{
-        return str;
+    if (str?.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
     }
-  }
+  };
 
   return (
     <div className="w-full h-[550px] text-white">
       <div className="w-full h-full">
         <div className="min-w-full  h-[780px]">
-        <div className="absolute w-full h-full bg-gradient-to-r from-black"></div>
-        <img 
-        className="w-full h-full object-cover"
-          src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
-          alt={movie?.title}
-        />
-        <div className=" absolute bg-gradient-to-t from-black  -mt-36 w-full min-h-[150px]"></div>
+          <div className="absolute w-full h-full  from-black"></div>
+          <img
+            className="w-full h-full object-cover"
+            src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
+            alt={movie?.title}
+          />
+          <div className=" absolute bg-gradient-to-t from-black  -mt-36 w-full min-h-[150px]"></div>
         </div>
         <div className="absolute space-y-5   w-full top-[20%] p-4 md:p-8">
           <h1 className="text-3xl md:text-5xl font-blod">{movie?.title}</h1>
@@ -48,10 +42,10 @@ const Main = () => {
               Watch Later
             </button>
           </div>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm font-semibold">
             Released: {movie?.release_date}
           </p>
-          <p className="w-full md:max-w-[70%] lg:max-w-[35%] text-gray-200">
+          <p className="w-full md:max-w-[70%] lg:max-w-[35%] font-semibold text-gray-200">
             {truncateString(movie?.overview, 150)}
           </p>
         </div>
